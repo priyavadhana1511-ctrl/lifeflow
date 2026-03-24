@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 from database import insert_donor, find_donor_by_phone, search_donors, get_all_donors
 
-app = Flask(__name__, template_folder="templates", static_folder="static")
+app = Flask(__name__, template_folder="templates/templates", static_folder="static")
 app.secret_key = "life_flow_secret"
 
 # Store active emergency alerts and simulated notification status
