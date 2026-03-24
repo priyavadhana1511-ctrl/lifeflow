@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LIFEFLOW Blood Donor App</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="/">LIFEFLOW</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
+          <li class="nav-item"><a class="nav-link" href="/search">Search</a></li>
+          <li class="nav-item"><a class="nav-link" href="/emergency">Emergency</a></li>
+          <li class="nav-item"><a class="nav-link" href="/hospital_login">Hospital Login</a></li>
+          <li class="nav-item"><a class="nav-link" href="/volunteer">Volunteer</a></li>
+        </ul>
+        <button id="theme-toggle" class="btn btn-outline-light btn-sm">Dark/Light</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container my-4">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="alert-container">
+      {% for category, msg in messages %}
+        <div class="alert alert-{{ 'success' if category == 'success' else 'info' if category == 'info' else 'warning' if category == 'warning' else 'danger' }} alert-dismissible fade show" role="alert">
+          {{ msg }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+
+    {% if emergency_active %}
+    <div class="alert alert-warning">
+      <h5>⚠ Emergency Alert Active</h5>
+      <p>Blood group needed: <strong>{{ emergency_info.blood_group }}</strong></p>
+      <p>Location: <strong>{{ emergency_info.location }}</strong></p>
+      <p>Nearby donors: <strong>{{ emergency_info.nearby_donors }}</strong></p>
+    </div>
+    {% endif %}
+
+    {% if emergency_alerts %}
+    <div class="alert alert-danger">
+      <h5>Emergency request active</h5>
+      <p>{{ emergency_alerts|length }} active emergency alert(s) are currently running.</p>
+    </div>
+    {% endif %}
+
+    <div class="row gy-3 mb-4">
+      <div class="col-md-3">
+        <div class="card border-danger text-center p-3">
+          <h6>Total donors</h6>
+          <p class="fs-4 mb-0">{{ total_donors }}</p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card border-success text-center p-3">
+          <h6>Available donors</h6>
+          <p class="fs-4 mb-0">{{ available_donors }}</p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card border-warning text-center p-3">
+          <h6>Rare donors</h6>
+          <p class="fs-4 mb-0">{{ rare_donors }}</p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card border-info text-center p-3">
+          <h6>Emergency alerts</h6>
+          <p class="fs-4 mb-0">{{ emergency_count }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-section p-5 rounded mb-4">
+      <div class="row">
+        <div class="col-lg-8">
+          <h1 class="display-4 text-danger">Welcome to LIFEFLOW</h1>
+          <h5 style="color: #ffff00 !important; font-weight: bold !important;">Find nearby blood donors and share emergency alerts in your locality.</h5>
+          <a href="/register" class="btn btn-danger btn-lg me-2">Register as Donor</a>
+          <a href="/search" class="btn btn-outline-danger btn-lg">Search Donors</a>
+        </div>
+        <div class="col-lg-4">
+          <img src="https://via.placeholder.com/300x200/ffcccc/990000?text=Blood+Donation" class="img-fluid rounded" alt="Blood Donation">
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-4">
+      <div class="col-md-4">
+        <div class="card h-100 border-danger">
+          <div class="card-body text-center">
+            <h5 class="card-title text-danger">100% Free</h5>
+            <p class="card-text">Quick donor registration and search for emergencies.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card h-100 border-danger">
+          <div class="card-body text-center">
+            <h5 class="card-title text-danger">Community</h5>
+            <p class="card-text">Help everyone in need by sharing availability.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card h-100 border-danger">
+          <div class="card-body text-center">
+            <h5 class="card-title text-danger">Emergency</h5>
+            <p class="card-text">Raise urgent alerts instantly to nearby donors.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="mb-3">Registered Donors</h2>
+    {% if donors %}
+    <div class="table-responsive">
+      <table class="table table-striped table-hover">
+        <thead class="table-danger">
+          <tr>
+            <th>Name</th>
+            <th>Blood Group</th>
+            <th>Phone</th>
+            <th>Location</th>
+            <th>Availability</th>
+            <th>Type</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for d in donors %}
+          <tr>
+            <td>{{ d.name }}{% if d.get('type') == 'volunteer' %} <span class="badge bg-success">Volunteer</span>{% endif %}</td>
+            <td><span class="badge bg-danger">{{ d.blood_group }}</span></td>
+            <td>{{ d.phone }}</td>
+            <td>{{ d.location }}</td>
+            <td>
+              {% if d.availability == 'Available' %}
+                <span class="badge bg-success">{{ d.availability }}</span>
+              {% else %}
+                <span class="badge bg-secondary">{{ d.availability }}</span>
+              {% endif %}
+            </td>
+            <td>{{ d.get('type', 'Regular')|title }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div class="alert alert-info">No donors yet. Register one today.</div>
+    {% endif %}
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const btn = document.getElementById('theme-toggle');
+    if (btn) {
+      const saved = localStorage.getItem('theme');
+      if (saved === 'dark') document.body.classList.add('dark-mode');
+      btn.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        const mode = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+        localStorage.setItem('theme', mode);
+      });
+    }
+  </script>
+</body>
+</html>
