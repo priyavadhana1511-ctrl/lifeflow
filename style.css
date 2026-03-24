@@ -1,0 +1,240 @@
+/* LIFEFLOW Custom Styles */
+:root {
+  --primary-red: #dc3545;
+  --dark-red: #b71c1c;
+  --light-red: #ffe5e5;
+  --success-green: #198754;
+  --warning-yellow: #ffc107;
+  --info-blue: #0dcaf0;
+}
+
+body {
+  background-color: #f8f9fa;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.navbar-brand {
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.hero-section {
+  background: linear-gradient(135deg, #ffe5e5 0%, #ffffff 100%);
+  border: 2px solid #dc3545;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(220, 53, 69, 0.1);
+}
+
+.card {
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+}
+
+.btn-danger {
+  background-color: var(--primary-red);
+  border-color: var(--primary-red);
+  font-weight: 600;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-danger:hover {
+  background-color: var(--dark-red);
+  border-color: var(--dark-red);
+  transform: translateY(-1px);
+}
+
+.table-danger th {
+  background-color: var(--primary-red) !important;
+  border-color: var(--primary-red) !important;
+}
+
+.badge {
+  font-size: 0.75em;
+}
+
+.alert-container {
+  margin-bottom: 1rem;
+}
+
+.form-control:focus {
+  border-color: var(--primary-red);
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+@media (max-width: 768px) {
+  .hero-section .row {
+    text-align: center;
+  }
+
+  .hero-section img {
+    margin-top: 1rem;
+  }
+}
+
+body.dark-mode {
+  background-color: #121212;
+  color: white;
+}
+
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode h5,
+body.dark-mode h6,
+body.dark-mode p,
+body.dark-mode label,
+body.dark-mode span,
+body.dark-mode a {
+  color: white !important;
+}
+
+body.dark-mode .card {
+  background-color: #1e1e1e;
+  color: white;
+}
+
+body.dark-mode .navbar {
+  background-color: #000000 !important;
+}
+
+body.dark-mode input,
+body.dark-mode select,
+body.dark-mode textarea {
+  background-color: #222;
+  color: white;
+  border: 1px solid #555;
+}
+
+body.dark-mode .btn {
+  color: white;
+}
+
+body.dark-mode .navbar,
+body.dark-mode .card,
+body.dark-mode .alert,
+body.dark-mode .table {
+  background-color: #1f1f1f !important;
+  color: #e0e0e0 !important;
+}
+
+body.dark-mode .table th,
+body.dark-mode .table td {
+  border-color: #333 !important;
+}
+
+body.dark-mode .card-header,
+body.dark-mode .card-body,
+body.dark-mode .btn,
+body.dark-mode .form-control,
+body.dark-mode .form-select {
+  background-color: #1f1f1f !important;
+  color: #e0e0e0 !important;
+}
+
+.dark-mode .hero,
+.dark-mode .banner,
+.dark-mode .welcome,
+.dark-mode .jumbotron {
+  background-color: #1e1e1e !important;
+  color: white !important;
+}
+
+.dark-mode .hero h1,
+.dark-mode .hero p,
+.dark-mode .banner h1,
+.dark-mode .banner p,
+.dark-mode .welcome h1,
+.dark-mode .welcome p {
+  color: white !important;
+}
+
+.dark-mode .container {
+  color: white;
+}
+.hero-section {
+    background-color: #ffe5e5 !important;
+}
+
+.hero-section h1,
+.hero-section h2,
+.hero-section h3,
+.hero-section h4,
+.hero-section h5,
+.hero-section h6 {
+    color: #d60000 !important;
+}
+
+.hero-section p,
+.hero-section .lead,
+.hero-text {
+    color: #333 !important;
+}
+
+/* DARK MODE HERO SECTION - EXPLICIT VISIBILITY RULES */
+body.dark-mode .hero-section {
+    background: #1a1a1a !important;
+    background-color: #1a1a1a !important;
+    background-image: none !important;
+}
+
+body.dark-mode .hero-section h1,
+body.dark-mode .hero-section h2,
+body.dark-mode .hero-section h3,
+body.dark-mode .hero-section h4,
+body.dark-mode .hero-section h5,
+body.dark-mode .hero-section h6 {
+    color: #ff6b6b !important;
+}
+
+/* Override Bootstrap .lead and paragraph text for dark mode */
+body.dark-mode .hero-section p {
+    color: #ffffff !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+    font-size: 1.25rem !important;
+    line-height: 1.5 !important;
+    text-shadow: none !important;
+    letter-spacing: 0 !important;
+}
+
+body.dark-mode .hero-section .lead {
+    color: #ffffff !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+    font-size: 1.25rem !important;
+    line-height: 1.5 !important;
+    font-weight: 400 !important;
+    text-shadow: none !important;
+}
+
+body.dark-mode .hero-text {
+    color: #ffffff !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+    font-size: 1.25rem !important;
+    line-height: 1.5 !important;
+}
+
+body.dark-mode p.lead.hero-text {
+    color: #ffffff !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+    font-size: 1.25rem !important;
+    line-height: 1.5 !important;
+    text-shadow: none !important;
+    background: transparent !important;
+}
+
+body.dark-mode .hero-section .btn {
+    color: #ffffff;
+}
